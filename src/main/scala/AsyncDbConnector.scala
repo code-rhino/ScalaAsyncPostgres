@@ -29,8 +29,12 @@ object AsyncDbConnector {
   val pool = new SingleThreadedAsyncObjectPool[PostgreSQLConnection](factory, poolConfiguration)
 
   def executeQuery(query:String):Future[QueryResult] = {
+    println(s"Pool Size = ${pool.inUse.size}")
     getConnection flatMap {
-      handler => handler.sendQuery(query)
+      handler => {
+        println(s"Pool Size = ${pool.inUse.size}")
+        handler.sendQuery(query)
+      }
     }
   }
 
