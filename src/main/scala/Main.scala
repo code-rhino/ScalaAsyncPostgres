@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 
-object Main extends App{
+object Main extends App {
 
 
   val conf = new Configuration(
@@ -21,11 +21,13 @@ object Main extends App{
     port = Postgres.port,
     charset = CharsetUtil.UTF_8)
 
-  val connectionFactory:PostgreSQLConnectionFactory = new PostgreSQLConnectionFactory(conf)
-  val connection:PostgreSQLConnection = connectionFactory.create
+  val connectionFactory: PostgreSQLConnectionFactory = new PostgreSQLConnectionFactory(conf)
+  val connection: PostgreSQLConnection = connectionFactory.create
 
   //Await.result(connection.connect, 20 seconds)
-  val future: Future[QueryResult] = connection.sendQuery("SELECT 0")
+  val future: Future[QueryResult] = AsyncDbConnector.executeQuery("SELECT 0")
+
+
 
 
   val mapResult:Future[Any] = future map(queryResult => queryResult.rows match {

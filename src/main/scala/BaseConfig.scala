@@ -6,12 +6,11 @@ object Config {
   private val config = ConfigFactory.load("application")
 
   object Async {
-    private lazy val pool       = config.getConfig("async_pool")
-    lazy val poolSize           = pool.getString("pool_size")
-    lazy val queueSize          = pool.getInt("queue_size")
-    lazy val maxObjects         = pool.getInt("max_objects")
-    lazy val idle               = pool.getInt("idle")
-    lazy val validationInterval = pool.getLong("validation_interval")
+    private lazy val pool         = config.getConfig("async_pool")
+    lazy val maxObjects           = pool.getInt("max_objects")
+    lazy val maxQueueSize         = pool.getInt("max_queue_size")
+    lazy val maxIdle              = pool.getLong("max_idle")
+    lazy val validationInterval   = pool.getLong("validation_interval")
   }
 
   object Postgres {
